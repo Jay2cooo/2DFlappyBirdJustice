@@ -24,14 +24,15 @@ public class bird : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 rb2d.velocity = Vector2.zero;
-                rb2d.AddForce(new Vector2(0, upForce));
+                rb2d.AddForce(new Vector2 (0, upForce));
                 anim.SetTrigger("Flap");
             }
         }
     }
-    private void OnCollisionEnter2D ()
+     void OnCollisionEnter2D ()
     {
         isdDead = true;
         anim.SetTrigger("Die");
+        GameControl.instance.BirdDied();
     }
 }
