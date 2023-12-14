@@ -9,9 +9,14 @@ public class bird : MonoBehaviour {
     private bool isdDead = false;
     private Rigidbody2D rb2d;
     private Animator anim;
+
+    AudioSource audioSource;
+    public AudioClip flapSound;
+    public AudioClip dieSound;
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         rb2d = GetComponent<Rigidbody2D> ();
         anim = GetComponent<Animator> ();
     }
@@ -26,6 +31,7 @@ public class bird : MonoBehaviour {
                 rb2d.velocity = Vector2.zero;
                 rb2d.AddForce(new Vector2 (0, upForce));
                 anim.SetTrigger("Flap");
+                PlaySound(flapSound);
             }
         }
     }
@@ -35,5 +41,11 @@ public class bird : MonoBehaviour {
         isdDead = true;
         anim.SetTrigger("Die");
         GameControl.instance.BirdDied();
+        PlaySound(dieSound);
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
     }
 }
